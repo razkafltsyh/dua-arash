@@ -6,7 +6,6 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
-    // Only run on client
     if (typeof window !== 'undefined') {
       import('@studio-freight/lenis').then(({ default: Lenis }) => {
         const lenis = new Lenis({
@@ -24,8 +23,20 @@ export default function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <main className={inter.className}>
-      <Component {...pageProps} />
+    <main className={`${inter.className} relative min-h-screen bg-[#0a0a0a]`}>
+
+      <div
+        className="fixed inset-0 pointer-events-none z-30 opacity-[0.03]"
+        style={{
+          backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
+          backgroundSize: '50px 50px',
+          backgroundAttachment: 'fixed',
+        }}
+      />
+
+      <div className="relative z-10">
+        <Component {...pageProps} />
+      </div>
     </main>
   );
 }
